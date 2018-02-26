@@ -10,10 +10,10 @@ using namespace std;
 // Weight: 辺の重み。制約によって変える。
 // INIT: distの初期化用。制約によって変える。
 
-// THE BIGGING OF THE LIBRARY.
+// THE BEGINNIG OF THE LIBRARY.
 
+#define INIT INF
 typedef int Weight;
-typedef INF INIT;
 typedef pair<Weight,int> P;
 
 struct Edge {
@@ -25,7 +25,7 @@ struct Edge {
 typedef vector< vector<Edge> > Graph;
 
 bool operator<(const Edge &e,const Edge &f) {
-	return e.cost>f.cost;
+	return e.cost!=f.cost?e.cost>f.cost:e.to<f.to;
 }
 
 void dijkstra(const Graph &G,int s,vector<Weight> &dist) {
@@ -35,9 +35,9 @@ void dijkstra(const Graph &G,int s,vector<Weight> &dist) {
 	priority_queue< P,vector<P>,greater<P> > Q;
 	Q.push(P(0,s));
 	while(!Q.empty()) {
-		P p=Q.top();q.pop();
-		int v=p.se;
-		if(dist[v]<p.fi) continue;
+		P p=Q.top();Q.pop();
+		int v=p.second;
+		if(dist[v]<p.first) continue;
 		for(auto &e:G[v]) {
 			if(dist[e.to]<=dist[v]+e.cost) continue;
 			dist[e.to]=dist[v]+e.cost;
@@ -50,7 +50,7 @@ void dijkstra(const Graph &G,int s,vector<Weight> &dist) {
 // THE FOLLOWING IS AN EXAMPLE OF USE.
 
 int main() {
-	cin::tie(0);
+	cin.tie(0);
 	ios::sync_with_stdio(false);
 
 	int n,m,s,g;

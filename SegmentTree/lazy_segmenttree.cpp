@@ -5,7 +5,7 @@ using namespace std;
 //
 // 0-indexed
 //
-//　LazySegmentTree(n,f,g,h,p,NODE_INIT,LAZY_INIT):
+// LazySegmentTree(n,f,g,h,p,NODE_INIT,LAZY_INIT):
 //		n: サイズnのセグ木の初期化。
 //		f: 要素と要素のマージ。
 //		g: 要素と作用素のマージ。
@@ -13,7 +13,11 @@ using namespace std;
 //		p: 作用素を下に降ろす時に行う演算。(第1引数は作用素の元の値、第2引数は降ろした後の区間の長さ)
 //		NODE_INIT: 要素の単位元
 //		LAZY_INIT: 作用素の単位元。
-//
+// set(k,x): k番目の要素をxで初期化する。
+// build(): 構築する。
+// query(l,r): 区間[l,r)に対して２項演算した結果を返す。
+// update(a,b,x): 区間[a,b)をxで更新する。
+// eval(k,len): k番目の要素の遅延評価。
 
 // THE BEGINNING OF THE LIBRARY
 

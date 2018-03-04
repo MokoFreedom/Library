@@ -95,9 +95,6 @@ int main() {
 			min_tree.update(a,b);
 			max_tree.update(a,b);
 			sum_tree.update(a,b);
-			//cout<<"min: ";min_tree.show();
-			//cout<<"max: ";max_tree.show();
-			//cout<<"sum: ";sum_tree.show();
 		}
 		else {
 			cout<<min_tree.query(a,b+1)<<endl;

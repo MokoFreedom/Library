@@ -7,31 +7,31 @@ using namespace std;
 // MEMO
 //
 // O(E log V)
-// Weight: 辺の重み。制約によって変える。
-// INIT: distの初期化用。制約によって変える。
 
 // THE BEGINNIG OF THE LIBRARY.
 
-#define INIT INF
-typedef int Weight;
-typedef pair<Weight,int> P;
-
+template< typename T >
 struct Edge {
-	int to;
-	Weight cost;
-	Edge(int to,Weight cost):to(to),cost(cost) {}
+	int from,to;
+	T cost;
+
+	Edge(int to,T cost):from(-1),to(to),cost(cost) {}
+	Edge(int from,int to,T cost):from(from),to(to),cost(cost) {}
 };
 
-typedef vector< vector<Edge> > Graph;
+template< typename T >
+using Edges=vector< Edge<T> >;
 
-bool operator<(const Edge &e,const Edge &f) {
-	return e.cost!=f.cost?e.cost>f.cost:e.to<f.to;
-}
+template< typename T >
+using WeightedGraph=vector< Edges<T> >;
 
-void dijkstra(const Graph &G,int s,vector<Weight> &dist) {
-	int n=(int)G.size();
-	dist.assign(n,INIT);
+template< typename T >
+vector<T> dijkstra(WeightedGraph<T> &G,int s) {
+	const auto INIT=numeric_limits<T>::max();
+	vector<T> dist(G.size(),INIT);
 	dist[s]=0;
+
+	using P=pair<T,int>;
 	priority_queue< P,vector<P>,greater<P> > Q;
 	Q.push(P(0,s));
 	while(!Q.empty()) {
@@ -44,10 +44,13 @@ void dijkstra(const Graph &G,int s,vector<Weight> &dist) {
 			Q.push(P(dist[e.to],e.to));
 		}
 	}
+	return dist;
 }
 
 // THE ENDING OF THE LIBRARY.
 // THE FOLLOWING IS AN EXAMPLE OF USE.
+
+using Weight=long long;
 
 int main() {
 	cin.tie(0);
@@ -56,16 +59,16 @@ int main() {
 	int n,m,s,g;
 	cin>>n>>m;
 	s=0;g=n-1;
-	Graph G(n);
+	WeightedGraph<Weight> G(n);
 	vector<Weight> dist(n);
 	for(int i=0;i<m;i++) {
 		int a,b;Weight c;
 		cin>>a>>b>>c;
 		a--,b--;
-		G[a].emplace_back(Edge(b,c));
-		G[b].emplace_back(Edge(a,c));
+		G[a].emplace_back(b,c);
+		G[b].emplace_back(a,c);
 	}
-	dijkstra(G,s,dist);
+	dist=dijkstra(G,s);
 	cout<<dist[g]<<endl;
 
 	return 0;

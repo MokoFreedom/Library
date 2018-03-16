@@ -23,7 +23,7 @@ template< typename T >
 using WeightedGraph=vector< Edges<T> >;
 
 template< typename T >
-T prim(WeightedGraph<T> &G) {
+T prim(const WeightedGraph<T> &G) {
 	using P=pair<T,int>;
 
 	T res=0;

@@ -35,6 +35,10 @@ using UnWeightedGraph=vector< vector<int> >;
 template< typename T >
 using Matrix=vector< vector<T> >;
 
+// 左上を(0,0)とすると、↓,↑,→,←,↘,↙,↗,↖,の順番に移動。
+int dx[]={ 0, 0, 1,-1, 1,-1, 1,-1};
+int dy[]={ 1,-1, 0, 0, 1, 1,-1,-1};
+
 // THE ENDING OF THE LIBRARY
 
 int main() {

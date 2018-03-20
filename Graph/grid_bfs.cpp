@@ -4,6 +4,11 @@ using namespace std;
 // MEMO
 //
 // O(WH)
+// fld: 盤面
+// sx,sy: 開始位置
+// wall: 障害物
+// dir: 進める方向の数。4なら上下左右。8なら斜めも。
+// 全てのマスへの距離を返す。
 
 // THE BEGINNING OF THE LIBRARY.
 

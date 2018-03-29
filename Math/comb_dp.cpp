@@ -7,7 +7,7 @@ using namespace std;
 
 // THE BEGINNING OF THE LIBRARY.
 
-template <typename T>
+template< typename T >
 vector< vector<T> > get_comb_dp(int n) {
 	vector< vector<T> > dp(n+1,vector<T>(n+1));
 

@@ -24,7 +24,7 @@ using namespace std;
 
 // THE BEGINNING OF THE LIBRARY.
 
-template <typename T>
+template< typename T >
 struct Combination {
 	vector<T> fc,ifc;
 	T MOD;

@@ -17,35 +17,35 @@ using namespace std;
 
 struct TopologicalSort {
 	int n;
-	vector< vector<int> > G;
-	vector<int> flg,order;
+	vector< vector< int > > G;
+	vector< int > flg, order;
 
-	enum { YET,VISITED,DONE };
+	enum { YET, VISITED, DONE };
 
 	TopologicalSort() {}
-	TopologicalSort(int sz):n(sz),G(sz),flg(sz) {};
+	TopologicalSort(int sz) : n(sz), G(sz), flg(sz) {};
 
-	void add_edge(int u,int v) {
+	void add_edge(int u, int v) {
 		G[u].push_back(v);
 	}
 
 	bool dfs(int v) {
-		flg[v]=VISITED;
-		for(auto u:G[v]) {
-			if(flg[u]!=DONE&&(flg[u]==VISITED||!dfs(u))) return false;
+		flg[v] = VISITED;
+		for (auto u : G[v]) {
+			if (flg[u] != DONE && (flg[u] == VISITED || !dfs(u))) return false;
 		}
-		flg[v]=DONE;
+		flg[v] = DONE;
 		order.push_back(v);
 		return true;
 	}
 
-	vector<int> topological_sort() {
-		fill(flg.begin(),flg.end(),0);
+	vector< int > topological_sort() {
+		fill(flg.begin(), flg.end(), 0);
 
-		for(int v=0;v<n;v++) {
-			if(flg[v]==YET&&!dfs(v)) return {};
+		for (int v = 0; v < n; v++) {
+			if (flg[v] == YET && !dfs(v)) return {};
 		}
-		reverse(order.begin(),order.end());
+		reverse(order.begin(), order.end());
 
 		return order;
 	}
@@ -56,16 +56,16 @@ struct TopologicalSort {
 
 int main() {
 
-	int V,E;
-	cin>>V>>E;
+	int V, E;
+	cin >> V >> E;
 	TopologicalSort tsort(V);
-	for(int i=0;i<E;i++) {
-		int u,v;
-		cin>>u>>v;
-		tsort.add_edge(u,v);
+	for (int i = 0; i < E; i++) {
+		int u, v;
+		cin >> u >> v;
+		tsort.add_edge(u, v);
 	}
-	auto order=tsort.topological_sort();
-	for(auto v:order) cout<<v<<endl;
+	auto order = tsort.topological_sort();
+	for (auto v : order) cout << v << endl;
 
 	return 0;
 }

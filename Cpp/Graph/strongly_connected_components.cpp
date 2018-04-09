@@ -5,37 +5,43 @@ using namespace std;
 //
 // O(V+E)
 //
-// G:	  グラフの隣接リスト表現
-// rG:	  辺の向きを逆向きにしたグラフ
+// 2回DFSを行う。
+// 1回目のDFSでは適当な頂点から始め、帰りがけ順ですべての頂点に番号をつけていく。
+// これが終わった時、グラフの末端の方の頂点ほど小さい番号が付いている。
+// 2回目のDFSではすべての辺の向きを逆にして、番号が一番大きいところからDFSを始める。
+// 通ることができた頂点の集合が1つの強連結成分となる。
+//
+// G: グラフの隣接リスト表現
+// rG: 辺の向きを逆向きにしたグラフ
 // edges: 辺の集合
-// comp:  属する強連結成分のトポロジカル順序
+// comp: 属する強連結成分のトポロジカル順序
 // order: 帰りがけ順の並び
-// used:  既に調べたか
+// used: 既に調べたか
 
 // THE BEGINNING OF THE LIBRARY
 
-typedef pair<int,int> Pii;
-typedef vector< vector<int> > Graph;
+typedef pair< int, int > Pii;
+typedef vector< vector< int > > Graph;
 
 struct StronglyConnectedComponents {
-	Graph G,rG;
-	vector<Pii> edges;
-	vector<int> comp,order,used;
+	Graph G, rG;
+	vector< Pii > edges;
+	vector< int > comp, order, used;
 
-	StronglyConnectedComponents(size_t v):G(v),rG(v),comp(v,-1),used(v,0) {}
+	StronglyConnectedComponents(size_t v) : G(v), rG(v), comp(v, -1), used(v, 0) {}
 
-	void add_edge(int x,int y) {
+	void add_edge(int x, int y) {
 		G[x].push_back(y);
 		rG[y].push_back(x);
-		edges.emplace_back(x,y);
+		edges.emplace_back(x, y);
 	}
 
-	void input(int m,int offset=0) {
-		int a,b;
-		for(int i=0;i<m;i++) {
-			cin>>a>>b;
-			a--,b--;
-			add_edge(a,b);
+	void input(int m, int offset=0) {
+		int a, b;
+		for (int i = 0; i < m; i++) {
+			cin >> a >> b;
+			a--, b--;
+			add_edge(a, b);
 		}
 	}
 
@@ -44,32 +50,32 @@ struct StronglyConnectedComponents {
 	}
 
 	void dfs(int v) {
-		if(used[v]) return;
-		used[v]=1;
-		for(auto u:G[v]) dfs(u);
+		if (used[v]) return;
+		used[v] = 1;
+		for (auto u : G[v]) dfs(u);
 		order.push_back(v);
 	}
 
-	void rdfs(int v,int cnt) {
-		if(comp[v]!=-1) return;
-		comp[v]=cnt;
-		for(auto u:rG[v]) rdfs(u,cnt);
+	void rdfs(int v, int cnt) {
+		if (comp[v] != -1) return;
+		comp[v] = cnt;
+		for (auto u : rG[v]) rdfs(u, cnt);
 	}
 
 	void build(Graph &t) {
-		for(int i=0;i<(int)G.size();i++) dfs(i);
-		reverse(order.begin(),order.end());
-		int cnt=0;
-		for(auto idx:order) if(comp[idx]==-1) rdfs(idx,cnt),cnt++;
+		for (int i = 0; i < (int)G.size(); i++) dfs(i);
+		reverse(order.begin(), order.end());
+		int cnt = 0;
+		for (auto idx : order) if (comp[idx] == -1) rdfs(idx, cnt), cnt++;
 
 		t.resize(cnt);
-		set<Pii> connect;
-		for(auto &e:edges) {
-			int v=comp[e.first],u=comp[e.second];
-			if(v==u) continue;
-			if(connect.count(Pii(v,u))) continue;
+		set< Pii > connect;
+		for (auto &e : edges) {
+			int v = comp[e.first], u = comp[e.second];
+			if (v == u) continue;
+			if (connect.count(Pii(v, u))) continue;
 			t[v].push_back(u);
-			connect.emplace(v,u);
+			connect.emplace(v, u);
 		}
 	}
 };
@@ -79,8 +85,8 @@ struct StronglyConnectedComponents {
 
 int main() {
 
-	int n,m;
-	cin>>n>>m;
+	int n, m;
+	cin >> n >> m;
 	StronglyConnectedComponents graph(n);
 	Graph ans;
 	graph.input(m);

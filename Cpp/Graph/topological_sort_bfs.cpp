@@ -14,32 +14,32 @@ using namespace std;
 
 struct TopologicalSort {
 	int n;
-	vector< vector<int> > G;
-	vector<bool> used;
-	vector<int> indeg,order;
+	vector< vector< int > > G;
+	vector< bool > used;
+	vector< int > indeg, order;
 
 	TopologicalSort() {}
-	TopologicalSort(int sz):n(sz),G(sz),used(sz),indeg(sz) {};
+	TopologicalSort(int sz) : n(sz), G(sz), used(sz), indeg(sz) {};
 
-	void add_edge(int u,int v) {
+	void add_edge(int u, int v) {
 		G[u].push_back(v);
 	}
 
-	vector<int> topological_sort() {
-		fill(indeg.begin(),indeg.end(),0);
+	vector< int > topological_sort() {
+		fill(indeg.begin(), indeg.end(), 0);
 
-		for(int v=0;v<n;v++) {
-			for(auto u:G[v]) indeg[u]++;
+		for (int v = 0; v < n; v++) {
+			for (auto u : G[v]) indeg[u]++;
 		}
-		queue<int> Q;
-		for(int v=0;v<n;v++) {
-			if(indeg[v]==0) Q.push(v);
+		queue< int > Q;
+		for (int v = 0; v < n; v++) {
+			if (indeg[v] == 0) Q.push(v);
 		}
-		while(!Q.empty()) {
-			int v=Q.front();Q.pop();
+		while (!Q.empty()) {
+			int v = Q.front(); Q.pop();
 			order.push_back(v);
-			for(auto u:G[v]) {
-				if(--indeg[u]==0) Q.push(u);
+			for (auto u : G[v]) {
+				if (--indeg[u] == 0) Q.push(u);
 			}
 		}
 
@@ -52,16 +52,16 @@ struct TopologicalSort {
 
 int main() {
 
-	int V,E;
-	cin>>V>>E;
+	int V, E;
+	cin >> V >> E;
 	TopologicalSort tsort(V);
-	for(int i=0;i<E;i++) {
-		int u,v;
-		cin>>u>>v;
-		tsort.add_edge(u,v);
+	for (int i = 0; i < E; i++) {
+		int u, v;
+		cin >> u >> v;
+		tsort.add_edge(u, v);
 	}
-	auto order=tsort.topological_sort();
-	for(auto v:order) cout<<v<<endl;
+	auto order = tsort.topological_sort();
+	for (auto v : order) cout << v << endl;
 
 	return 0;
 }

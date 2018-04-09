@@ -10,36 +10,36 @@ using namespace std;
 // THE BEGINNING OF THE LIBRARY.
 
 template< typename T >
-map<T,int> prime_factorization(T n) {
-	map<T,int> res;
-	for(T i=2;i*i<=n;i++) {
-		while(n%i==0) {
+map< T, int > prime_factorization(T n) {
+	map< T, int > res;
+	for (T i = 2; i * i <= n;i++) {
+		while (n % i == 0) {
 			res[i]++;
-			n/=i;
+			n /= i;
 		}
 	}
-	if(n!=1) res[n]=1;
+	if (n != 1) res[n] = 1;
 	return res;
 }
 
-vector<bool> eratosthenes(int n) {
-	vector<bool> is_prime(n+1,true);
-	is_prime[0]=is_prime[1]=false;
-	for(int i=2;i*i<=n;i++) {
-		if(is_prime[i]) {
-			for(int j=2*i;j<=n;j+=i) {
-				is_prime[j]=false;
+vector< bool > eratosthenes(int n) {
+	vector< bool > is_prime(n + 1, true);
+	is_prime[0] = is_prime[1] = false;
+	for (int i = 2; i * i <= n; i++) {
+		if (is_prime[i]) {
+			for (int j = 2 * i; j <= n; j += i) {
+				is_prime[j] = false;
 			}
 		}
 	}
 	return is_prime;
 }
 
-vector<int> prime_list(int n) {
-	vector<int> res;
-	auto is_prime=eratosthenes(n);
-	for(int i=0;i<=n;i++) {
-		if(is_prime[i]) {
+vector< int > prime_list(int n) {
+	vector< int > res;
+	auto is_prime = eratosthenes(n);
+	for (int i = 0; i <= n; i++) {
+		if (is_prime[i]) {
 			res.push_back(i);
 		}
 	}

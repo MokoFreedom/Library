@@ -13,7 +13,7 @@ using namespace std;
 //		p: 作用素を下に降ろす時に行う演算。(第1引数は作用素の元の値、第2引数は降ろした後の区間の長さ)
 //		NODE_INIT: 要素の単位元
 //		LAZY_INIT: 作用素の単位元。
-// set(k, x): k 番目の要素を x で初期化する。
+// SET(k, x): k 番目の要素を x で初期化する。
 // build(): 構築する。
 // query(l, r): 区間 [l, r) に対して2項演算した結果を返す。
 // update(a,b,x): 区間 [a, b) を x で更新する。
@@ -47,7 +47,7 @@ struct LazySegmentTree {
 		lazy.assign(2*sz - 1, LAZY_INIT);
 	}
 
-	void set(int k, const T &x) {
+	void SET(int k, const T &x) {
 		node[k + sz - 1] = x;
 	}
 
@@ -132,4 +132,4 @@ int main() {
 	}
 
 	return 0;
-}
+}          
